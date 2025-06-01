@@ -1,0 +1,75 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 0 0.5rem;
+}
+
+.pagination button {
+  padding: 0;
+  border: none;
+  border-radius: 50%; /* Makes it circular */
+  background-color: #f0f0f0;
+  cursor: pointer;
+  width: 36px; /* Fixed width and height for perfect circle */
+  height: 36px;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.pagination button:hover {
+  background-color: #2563eb;
+  color: white;
+}
+
+.pagination button.active {
+  background-color: #2563eb;
+  color: white;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ellipsis {
+  padding: 0.5rem 0.8rem;
+  color: #888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Arrow buttons */
+.pagination .arrow {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 480px) {
+  .pagination {
+    gap: 0.3rem;
+    margin-top: 1rem;
+  }
+
+  .pagination button {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .pagination button {
+    width: 28px;
+    height: 28px;
+  }
+}

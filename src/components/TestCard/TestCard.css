@@ -1,0 +1,109 @@
+.test-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 0.8rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+  direction: rtl;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
+  position: relative;
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+/* Hover effects for the entire card */
+.test-card:hover {
+  transform: translateY(-5px); /* Slight lift effect */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+  background-color: #f8fafc; /* Slight background color change */
+}
+
+.test-card:hover .card-icon {
+  transform: scale(1.05); /* Slight icon enlargement */
+}
+
+.test-card:hover .card-title {
+}
+
+.test-card:hover .details-button {
+  background-color: #1d4ed8;
+  transform: translateY(-1px); /* Slight button lift */
+  box-shadow: 0 2px 6px rgba(29, 78, 216, 0.2); /* Button shadow */
+}
+
+/* Center only the logo/icon */
+.card-logo,
+.card-icon-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.card-logo img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.card-icon {
+  font-size: 3rem;
+  color: #2563eb;
+  transition: all 0.3s ease;
+}
+
+/* Right-align text content */
+.card-content {
+  text-align: right;
+}
+
+.card-title {
+  font-size: 18px;
+  margin-bottom: 0.75rem;
+  color: #1f2937;
+  line-height: 1.1;
+  transition: all 0.3s ease;
+}
+
+.card-description {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.details-button {
+  padding: 0.5rem 1rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  width: fit-content;
+  margin-right: auto;
+  transition: all 0.3s ease;
+}
+
+/* Mobile styles */
+@media (max-width: 480px) {
+  .card-logo img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .card-icon {
+    font-size: 2.5rem;
+  }
+
+  .test-card:hover {
+    transform: translateY(-3px); /* Smaller lift on mobile */
+  }
+}
