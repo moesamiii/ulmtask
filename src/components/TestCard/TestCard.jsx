@@ -4,7 +4,6 @@ import "./TestCard.css";
 
 const TestCard = ({ test }) => {
   const { i18n } = useTranslation();
-
   const isArabic = i18n.language === "ar";
 
   return (
@@ -21,7 +20,7 @@ const TestCard = ({ test }) => {
           />
         </div>
       ) : (
-        <div className="card-icon">🔬</div>
+        <div className="card-icon">🔬</div> // fallback icon
       )}
 
       <h3 className="card-title">

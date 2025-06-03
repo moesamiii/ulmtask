@@ -7,10 +7,10 @@ import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
 import NoDataMessage from "../components/NoDataMessage/NoDataMessage";
 import Navbar from "../components/Navbar/Navbar";
-import "./MedicalTestsPage.css";
 import Footer from "../components/Footer/Footer";
 import StickyButton from "../components/StickyButton/StickyButton";
 import { FaArrowUp } from "react-icons/fa";
+import "./MedicalTestsPage.css";
 
 const MedicalTestsPage = () => {
   const { t, i18n } = useTranslation();
@@ -19,57 +19,77 @@ const MedicalTestsPage = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [viewCenters, setViewCenters] = useState(false);
   const pageSize = 8;
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  useEffect(() => {
-    const fetchTests = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+  const fetchTests = async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
-        const response = await axios.get(
-          "https://newulmmed.com/api/MedicalTest/GetAllActiveMedicalTestsWithoutPrice",
-          {
-            params: {
-              PageNumber: currentPage,
-              pageSize: pageSize,
-            },
-          }
-        );
+      const url = viewCenters
+        ? "https://test.newulmmed.com/api/MedicalTest/GetAllTestCenters"
+        : "https://newulmmed.com/api/MedicalTest/GetAllActiveMedicalTestsWithoutPrice";
 
-        const data = response.data;
-        setTests(data.data || []);
-        setTotalPages(Math.ceil(data.totalCount / pageSize));
-      } catch (err) {
-        let errorMsg = t("fetch_error"); // fallback translation
+      const response = await axios.get(url, {
+        params: {
+          pageNumber: currentPage,
+          pageSize: pageSize,
+        },
+      });
 
-        if (err.response?.data?.message) {
-          errorMsg = err.response.data.message;
-        } else if (err.message) {
-          errorMsg = err.message;
-        } else if (typeof err === "string") {
-          errorMsg = err;
-        }
+      const data = response.data;
 
-        setError(errorMsg);
-        setTests([]); // clear tests on error
-      } finally {
-        setLoading(false);
+      let formattedData = [];
+
+      if (viewCenters) {
+        // Normalize test center data to match TestCard structure
+        formattedData = (data.data || []).map((center) => ({
+          id: center.id,
+          name: center.centerEnglishName,
+          arabicName: center.centerArabicName,
+          logo: center.centerLogo,
+          description: center.phone,
+          arabicDescription: center.phone,
+        }));
+      } else {
+        formattedData = data.data || [];
       }
-    };
 
+      setTests(formattedData);
+      setTotalPages(Math.ceil((data.totalCount || 0) / pageSize));
+    } catch (err) {
+      let errorMsg = t("fetch_error");
+      if (err.response?.data?.message) {
+        errorMsg = err.response.data.message;
+      } else if (err.message) {
+        errorMsg = err.message;
+      }
+      setError(errorMsg);
+      setTests([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchTests();
-  }, [currentPage, i18n.language, t]);
+  }, [currentPage, viewCenters, i18n.language]);
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
       scrollToTop();
     }
+  };
+
+  const handleToggleView = () => {
+    setViewCenters((prev) => !prev);
+    setCurrentPage(1);
   };
 
   if (loading) return <LoadingSpinner />;
@@ -80,12 +100,22 @@ const MedicalTestsPage = () => {
   return (
     <div className="medical-tests-page">
       <Navbar />
-      <h1 className="page-title">{t("medical_tests_title")}</h1>
+      <h1 className="page-title">
+        {viewCenters ? t("test_centers") : t("medical_tests_title")}
+      </h1>
+
+      <div className="toggle-button-container">
+        <button onClick={handleToggleView} className="toggle-button">
+          {viewCenters ? t("view_tests") : t("view_centers")}
+        </button>
+      </div>
+
       <div className="medical-tests-grid">
         {tests.map((test) => (
           <TestCard key={test.id} test={test} />
         ))}
       </div>
+
       {totalPages > 1 && (
         <Pagination
           currentPage={currentPage}
@@ -93,6 +123,7 @@ const MedicalTestsPage = () => {
           onPageChange={handlePageChange}
         />
       )}
+
       <Footer />
 
       <StickyButton
