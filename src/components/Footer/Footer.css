@@ -1,0 +1,17 @@
+.footer {
+  width: 100%;
+  margin-top: 3rem;
+  padding: 1.5rem 1rem;
+  background-color: #007bff; /* Bootstrap blue */
+  color: #ffffff;
+  text-align: center;
+  font-size: 0.95rem;
+  border-top: 1px solid #006ae0;
+  box-sizing: border-box;
+}
+
+.footer-content {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}

@@ -8,6 +8,9 @@ import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
 import NoDataMessage from "../components/NoDataMessage/NoDataMessage";
 import Navbar from "../components/Navbar/Navbar";
 import "./MedicalTestsPage.css";
+import Footer from "../components/Footer/Footer";
+import StickyButton from "../components/StickyButton/StickyButton";
+import { FaArrowUp } from "react-icons/fa";
 
 const MedicalTestsPage = () => {
   const { t, i18n } = useTranslation();
@@ -17,6 +20,10 @@ const MedicalTestsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const pageSize = 8;
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   useEffect(() => {
     const fetchTests = async () => {
@@ -38,21 +45,30 @@ const MedicalTestsPage = () => {
         setTests(data.data || []);
         setTotalPages(Math.ceil(data.totalCount / pageSize));
       } catch (err) {
-        setError(
-          err.response?.data?.message || err.message || t("fetch_error")
-        );
-        setTests([]);
+        let errorMsg = t("fetch_error"); // fallback translation
+
+        if (err.response?.data?.message) {
+          errorMsg = err.response.data.message;
+        } else if (err.message) {
+          errorMsg = err.message;
+        } else if (typeof err === "string") {
+          errorMsg = err;
+        }
+
+        setError(errorMsg);
+        setTests([]); // clear tests on error
       } finally {
         setLoading(false);
       }
     };
 
     fetchTests();
-  }, [currentPage, i18n.language]);
+  }, [currentPage, i18n.language, t]);
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
+      scrollToTop();
     }
   };
 
@@ -77,6 +93,14 @@ const MedicalTestsPage = () => {
           onPageChange={handlePageChange}
         />
       )}
+      <Footer />
+
+      <StickyButton
+        label="Chat on WhatsApp"
+        phoneNumber="00962785050875"
+        message="Hello, I want to get in touch!"
+        icon={<i className="fab fa-whatsapp"></i>}
+      />
     </div>
   );
 };

@@ -1,10 +1,12 @@
 .medical-tests-page {
-  width: 100%;
-  margin: 0 auto;
-  padding: 1rem;
+  width: 100vw; /* full viewport width */
+  margin: 0; /* remove horizontal auto margin */
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box; /* include padding in width calculations */
 }
 
 .page-title {
@@ -13,6 +15,9 @@
   color: #1f2937;
   width: 100%;
   font-size: 1.5rem;
+  padding-left: 1rem; /* add some left/right padding for title */
+  padding-right: 1rem;
+  box-sizing: border-box;
 }
 
 .medical-tests-grid {
@@ -20,49 +25,62 @@
   gap: 1.5rem;
   grid-template-columns: repeat(1, minmax(250px, 1fr));
   width: 100%;
-  padding: 0 0.5rem;
-  margin: 0 auto;
-  justify-content: center;
+  padding-left: 1rem; /* horizontal padding for grid */
+  padding-right: 1rem;
+  margin: 0; /* no auto margin */
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
   .medical-tests-page {
-    padding: 1.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
   }
 
   .page-title {
     margin-bottom: 2rem;
     font-size: 1.8rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 
   .medical-tests-grid {
     gap: 1rem;
     grid-template-columns: repeat(2, minmax(250px, 1fr));
-    padding: 0 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 }
 
 @media (min-width: 1024px) {
   .medical-tests-page {
-    padding: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
 
   .medical-tests-grid {
     grid-template-columns: repeat(4, minmax(250px, 1fr));
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
 }
 
 @media (max-width: 360px) {
   .medical-tests-page {
-    padding: 0.8rem;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
   }
 
   .page-title {
     font-size: 1.3rem;
     margin-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .medical-tests-grid {
     gap: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
