@@ -1,12 +1,18 @@
-// Navbar.jsx
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "./Navbar.css";
 import logo from "../../assets/Ulmcare logo 1.png";
-import AuthModal from "../AuthModal/AuthModal"; // Import the new modal component
+import AuthModal from "../AuthModal/AuthModal";
 
 const Navbar = () => {
   const [showAuth, setShowAuth] = useState(false);
+  const { t, i18n } = useTranslation();
+
+  const toggleLang = () => {
+    const newLang = i18n.language === "ar" ? "en" : "ar";
+    i18n.changeLanguage(newLang); // triggers App.jsx effect to update direction
+  };
 
   return (
     <>
@@ -16,21 +22,24 @@ const Navbar = () => {
             <img src={logo} alt="Logo" className="navbar-logo" />
             <ul className="navbar-links">
               <li>
-                <Link to="/">الرئيسية</Link>
+                <Link to="/">{t("home")}</Link>
               </li>
               <li>
-                <Link to="/services">خدماتنا</Link>
+                <Link to="/services">{t("services")}</Link>
               </li>
               <li>
-                <Link to="/aboutus">من نحن</Link>
+                <Link to="/aboutus">{t("about")}</Link>
               </li>
             </ul>
           </div>
 
           <div className="navbar-login">
-            {/* Change Link to button to control modal */}
             <button className="login-button" onClick={() => setShowAuth(true)}>
-              تسجيل الدخول
+              {t("login")}
+            </button>
+
+            <button className="lang-toggle" onClick={toggleLang}>
+              🌐 {i18n.language === "ar" ? "EN" : "عربي"}
             </button>
           </div>
         </div>

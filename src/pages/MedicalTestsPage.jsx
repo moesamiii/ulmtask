@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import axios from "axios"; // ✅ Import Axios
+import axios from "axios";
+import { useTranslation } from "react-i18next";
 import TestCard from "../components/TestCard/TestCard";
 import Pagination from "../components/Pagination/Pagination";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
@@ -9,6 +10,7 @@ import Navbar from "../components/Navbar/Navbar";
 import "./MedicalTestsPage.css";
 
 const MedicalTestsPage = () => {
+  const { t, i18n } = useTranslation();
   const [tests, setTests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -37,9 +39,7 @@ const MedicalTestsPage = () => {
         setTotalPages(Math.ceil(data.totalCount / pageSize));
       } catch (err) {
         setError(
-          err.response?.data?.message ||
-            err.message ||
-            "حدث خطأ أثناء جلب البيانات"
+          err.response?.data?.message || err.message || t("fetch_error")
         );
         setTests([]);
       } finally {
@@ -48,7 +48,7 @@ const MedicalTestsPage = () => {
     };
 
     fetchTests();
-  }, [currentPage]);
+  }, [currentPage, i18n.language]);
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
@@ -58,12 +58,13 @@ const MedicalTestsPage = () => {
 
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorMessage error={error} />;
-  if (tests.length === 0 && !loading) return <NoDataMessage />;
+  if (tests.length === 0 && !loading)
+    return <NoDataMessage message={t("no_data")} />;
 
   return (
-    <div className="medical-tests-page" dir="rtl">
+    <div className="medical-tests-page">
       <Navbar />
-      <h1 className="page-title">قائمة الفحوصات الطبية</h1>
+      <h1 className="page-title">{t("medical_tests_title")}</h1>
       <div className="medical-tests-grid">
         {tests.map((test) => (
           <TestCard key={test.id} test={test} />
