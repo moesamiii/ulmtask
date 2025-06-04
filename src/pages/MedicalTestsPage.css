@@ -110,3 +110,21 @@
   outline: none;
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
 }
+
+@media (max-width: 640px) {
+  .medical-tests-grid {
+    display: flex; /* switch from grid to flex */
+    flex-wrap: nowrap; /* no wrapping, keep all items in one row */
+    overflow-x: auto; /* enable horizontal scroll */
+    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+    gap: 1rem; /* spacing between items */
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Optional: make each item have a fixed min-width for consistent slider cards */
+  .medical-tests-grid > * {
+    min-width: 250px; /* same as minmax in grid */
+    flex: 0 0 auto; /* prevent shrinking or growing */
+  }
+}
