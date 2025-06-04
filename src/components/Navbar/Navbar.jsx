@@ -7,40 +7,64 @@ import AuthModal from "../AuthModal/AuthModal";
 
 const Navbar = () => {
   const [showAuth, setShowAuth] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { t, i18n } = useTranslation();
 
   const toggleLang = () => {
     const newLang = i18n.language === "ar" ? "en" : "ar";
-    i18n.changeLanguage(newLang); // triggers App.jsx effect to update direction
+    i18n.changeLanguage(newLang);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prev) => !prev);
   };
 
   return (
     <>
       <nav className="navbar">
         <div className="navbar-content">
-          <div className="navbar-main">
-            <img src={logo} alt="Logo" className="navbar-logo" />
+          <img src={logo} alt="Logo" className="navbar-logo" />
+
+          {/* Hamburger Icon */}
+          <button className="hamburger" onClick={toggleMobileMenu}>
+            ☰
+          </button>
+
+          {/* Main Links */}
+          <div className={`navbar-main ${isMobileMenuOpen ? "active" : ""}`}>
             <ul className="navbar-links">
               <li>
-                <Link to="/">{t("home")}</Link>
+                <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
+                  {t("home")}
+                </Link>
               </li>
               <li>
-                <Link to="/services">{t("services")}</Link>
+                <Link to="/services" onClick={() => setIsMobileMenuOpen(false)}>
+                  {t("services")}
+                </Link>
               </li>
               <li>
-                <Link to="/aboutus">{t("about")}</Link>
+                <Link to="/aboutus" onClick={() => setIsMobileMenuOpen(false)}>
+                  {t("about")}
+                </Link>
               </li>
             </ul>
-          </div>
 
-          <div className="navbar-login">
-            <button className="login-button" onClick={() => setShowAuth(true)}>
-              {t("login")}
-            </button>
+            <div className="navbar-login">
+              <button
+                className="login-button"
+                onClick={() => {
+                  setShowAuth(true);
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                {t("login")}
+              </button>
 
-            <button className="lang-toggle" onClick={toggleLang}>
-              🌐 {i18n.language === "ar" ? "EN" : "عربي"}
-            </button>
+              <button className="lang-toggle" onClick={toggleLang}>
+                🌐 {i18n.language === "ar" ? "EN" : "عربي"}
+              </button>
+            </div>
           </div>
         </div>
       </nav>
