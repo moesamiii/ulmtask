@@ -11,6 +11,7 @@ import Footer from "../components/Footer/Footer";
 import StickyButton from "../components/StickyButton/StickyButton";
 import { FaArrowUp } from "react-icons/fa";
 import "./MedicalTestsPage.css";
+import TestPackageCard from "../components/TestCard/TestPackageCard";
 
 const MedicalTestsPage = () => {
   const { t, i18n } = useTranslation();
@@ -19,7 +20,6 @@ const MedicalTestsPage = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [viewCenters, setViewCenters] = useState(false);
   const pageSize = 8;
 
   const scrollToTop = () => {
@@ -31,9 +31,8 @@ const MedicalTestsPage = () => {
       setLoading(true);
       setError(null);
 
-      const url = viewCenters
-        ? "https://test.newulmmed.com/api/MedicalTest/GetAllTestCenters"
-        : "https://newulmmed.com/api/MedicalTest/GetAllActiveMedicalTestsWithoutPrice";
+      const url =
+        "https://newulmmed.com/api/MedicalTest/GetAllActiveMedicalTestsWithoutPrice";
 
       const response = await axios.get(url, {
         params: {
@@ -44,21 +43,7 @@ const MedicalTestsPage = () => {
 
       const data = response.data;
 
-      let formattedData = [];
-
-      if (viewCenters) {
-        // Normalize test center data to match TestCard structure
-        formattedData = (data.data || []).map((center) => ({
-          id: center.id,
-          name: center.centerEnglishName,
-          arabicName: center.centerArabicName,
-          logo: center.centerLogo,
-          description: center.phone,
-          arabicDescription: center.phone,
-        }));
-      } else {
-        formattedData = data.data || [];
-      }
+      const formattedData = data.data || [];
 
       setTests(formattedData);
       setTotalPages(Math.ceil((data.totalCount || 0) / pageSize));
@@ -78,18 +63,13 @@ const MedicalTestsPage = () => {
 
   useEffect(() => {
     fetchTests();
-  }, [currentPage, viewCenters, i18n.language]);
+  }, [currentPage, i18n.language]);
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
       scrollToTop();
     }
-  };
-
-  const handleToggleView = () => {
-    setViewCenters((prev) => !prev);
-    setCurrentPage(1);
   };
 
   if (loading) return <LoadingSpinner />;
@@ -100,15 +80,7 @@ const MedicalTestsPage = () => {
   return (
     <div className="medical-tests-page">
       <Navbar />
-      <h1 className="page-title">
-        {viewCenters ? t("test_centers") : t("medical_tests_title")}
-      </h1>
-
-      <div className="toggle-button-container">
-        <button onClick={handleToggleView} className="toggle-button">
-          {viewCenters ? t("view_tests") : t("view_centers")}
-        </button>
-      </div>
+      <h1 className="page-title">{t("medical_tests_title")}</h1>
 
       <div className="medical-tests-grid">
         {tests.map((test) => (
@@ -123,6 +95,12 @@ const MedicalTestsPage = () => {
           onPageChange={handlePageChange}
         />
       )}
+
+      <div className="medical-tests-grid">
+        {tests.map((test) => (
+          <TestPackageCard key={test.id} test={test} />
+        ))}
+      </div>
 
       <Footer />
 
