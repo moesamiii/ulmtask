@@ -1,38 +1,41 @@
 import React from "react";
 import "./Footer.css";
 import logo from "../../assets/Ulmcare logo 1.png";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-column">
-          <h3>تواصل معنا</h3>
+          <h3>{t("footer.contact_us")}</h3>
           <ul>
             <li>📞 +966 123 456 789</li>
             <li>📧 info@newulmmed.com</li>
-            <li>🏢 الاردن - عمان</li>
+            <li>🏢 {t("footer.location")}</li>
           </ul>
         </div>
 
         <div className="footer-column">
-          <h3>خدماتنا</h3>
+          <h3>{t("footer.our_services")}</h3>
           <ul>
-            <li>التحاليل الطبية</li>
-            <li>الأشعة</li>
-            <li>الأطباء</li>
-            <li>المرافق الصحية</li>
-            <li>السياحة العلاجية</li>
+            <li>{t("footer.services.medical_tests")}</li>
+            <li>{t("footer.services.radiology")}</li>
+            <li>{t("footer.services.doctors")}</li>
+            <li>{t("footer.services.health_facilities")}</li>
+            <li>{t("footer.services.medical_tourism")}</li>
           </ul>
         </div>
 
         <div className="footer-column">
-          <h3>الشركة</h3>
+          <h3>{t("footer.company")}</h3>
           <ul>
-            <li>من نحن</li>
-            <li>رؤيتنا</li>
-            <li>رسالتنا</li>
-            <li>اتصل بنا</li>
+            <li>{t("footer.about_us")}</li>
+            <li>{t("footer.our_vision")}</li>
+            <li>{t("footer.our_mission")}</li>
+            <li>{t("footer.contact")}</li>
           </ul>
         </div>
 
@@ -43,7 +46,8 @@ const Footer = () => {
 
       <div className="footer-bottom">
         <p>
-          &copy; {new Date().getFullYear()} New Ulm Med. جميع الحقوق محفوظة.
+          &copy; {new Date().getFullYear()} New Ulm Med.{" "}
+          {t("footer.rights_reserved")}
         </p>
       </div>
     </footer>
