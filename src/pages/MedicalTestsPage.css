@@ -1,3 +1,12 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* prevent horizontal overflow */
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .medical-tests-page {
   width: 100vw; /* full viewport width */
   margin: 0; /* remove horizontal auto margin */
@@ -118,13 +127,11 @@
     overflow-x: auto; /* enable horizontal scroll */
     -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
     gap: 1rem; /* spacing between items */
-    padding-left: 1rem;
-    padding-right: 1rem;
   }
 
   /* Optional: make each item have a fixed min-width for consistent slider cards */
   .medical-tests-grid > * {
-    min-width: 250px; /* same as minmax in grid */
+    min-width: 100px; /* same as minmax in grid */
     flex: 0 0 auto; /* prevent shrinking or growing */
   }
 }
