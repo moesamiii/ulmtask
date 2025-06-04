@@ -46,7 +46,7 @@ const Footer = () => {
 
       <div className="footer-bottom">
         <p>
-          &copy; {new Date().getFullYear()} New Ulm Med.{" "}
+          &copy; {new Date().getFullYear()} New Ulm{" "}
           {t("footer.rights_reserved")}
         </p>
       </div>
