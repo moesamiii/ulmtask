@@ -50,6 +50,13 @@ const Navbar = () => {
                   {t("about")}
                 </Link>
               </li>
+
+              {/* ✅ Shopping Cart button */}
+              <li>
+                <Link to="/cart" onClick={() => setIsMobileMenuOpen(false)}>
+                  🛒 {t("cart")}
+                </Link>
+              </li>
             </ul>
 
             <div className="navbar-login">
