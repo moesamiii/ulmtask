@@ -47,6 +47,7 @@ const AuthModal = ({ onClose }) => {
           borderRadius: "16px",
           overflow: "hidden",
           boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
+          direction: "ltr",
         }}
         onClick={(e) => e.stopPropagation()}
       >
