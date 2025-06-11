@@ -26,224 +26,90 @@ const AuthModal = ({ onClose }) => {
 
   return (
     <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "rgba(255, 255, 255, 0.5)",
-        zIndex: 9999,
-      }}
+      className="fixed inset-0 flex justify-center items-center bg-white/50 z-[9999]"
       onClick={onClose}
     >
       <div
-        style={{
-          width: "90%",
-          maxWidth: "1200px",
-          display: "flex",
-          flexDirection: "row",
-          backgroundColor: "white",
-          borderRadius: "16px",
-          overflow: "hidden",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
-          direction: "ltr",
-        }}
+        className="w-[90%] max-w-[1200px] flex flex-row bg-white rounded-2xl overflow-hidden shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Left Section (Image) */}
-        <div
-          style={{
-            flex: 1,
-            background: "linear-gradient(to bottom, #ebf4ff, white)",
-            padding: "2rem",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            position: "relative",
-          }}
-        >
+        {/* Right Section (Login Form) — now FIRST so will be on LEFT */}
+        <div className="flex-1 bg-white p-10" dir="rtl">
+          <h3 className="w-[364px] text-[30px] font-bold text-gray-900 text-center mb-6">
+            تسجيل الدخول
+          </h3>
+
+          <div className="flex flex-col gap-4">
+            {/* Email Input */}
+            <div className="relative">
+              <input
+                type="text"
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
+                placeholder="الايميل"
+                className="w-[364px] h-[52px] px-4 pr-12 border border-gray-300 rounded-2xl bg-white text-gray-800 outline-none"
+              />
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl">
+                👤
+              </span>
+            </div>
+
+            {/* Password Input */}
+            <div className="relative">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="كلمة المرور"
+                className="w-[364px] h-[52px] px-4 pr-12 border border-gray-300 rounded-2xl bg-white text-gray-800 outline-none"
+              />
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl">
+                🔒
+              </span>
+            </div>
+
+            {/* Error */}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+
+            {/* Forgot Password */}
+            <div className="w-[364px] text-xs text-red-700 cursor-pointer mt-1 text-left">
+              هل نسيت كلمة المرور؟
+            </div>
+
+            {/* Login Button */}
+            <button
+              onClick={handleLogin}
+              disabled={loading}
+              className={`w-[364px] h-[52px] rounded-2xl font-semibold text-white mt-4 shadow-md ${
+                loading ? "opacity-50" : "hover:opacity-90"
+              } bg-gradient-to-r from-blue-500 to-blue-600 cursor-pointer border-none`}
+            >
+              {loading ? "جارٍ تسجيل الدخول..." : "تسجيل الدخول"}
+            </button>
+
+            {/* Create Account */}
+            <div className="w-[364px] text-base text-center text-gray-600 mt-2">
+              ليس لديك حساب؟{" "}
+              <span className="text-blue-500 underline cursor-pointer">
+                إنشاء حساب جديد
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Left Section (Image) — now SECOND so will be on RIGHT */}
+        <div className="flex-1 bg-gradient-to-b from-blue-100 to-white p-8 flex flex-col justify-center items-center relative">
           <button
             onClick={onClose}
-            style={{
-              position: "absolute",
-              top: "1rem",
-              left: "1rem",
-              fontSize: "1.5rem",
-              color: "#2196F3",
-              border: "none",
-              background: "none",
-              cursor: "pointer",
-            }}
+            className="absolute top-4 left-4 text-2xl text-blue-500 cursor-pointer border-none bg-transparent"
           >
             ×
           </button>
           <img
             src="/Group 452466.png"
             alt="doctors"
-            style={{
-              width: "100%",
-              maxWidth: "300px",
-              margin: "1.5rem 0",
-            }}
+            className="w-full max-w-[300px] my-6"
           />
-        </div>
-
-        {/* Right Section (Login Form) */}
-        <div
-          style={{ flex: 1, backgroundColor: "white", padding: "2.5rem" }}
-          dir="rtl"
-        >
-          <h3
-            style={{
-              width: "364px",
-              height: "21px",
-              fontSize: "30px",
-              lineHeight: "100%",
-              fontWeight: "bold",
-              color: "#222222",
-              textAlign: "center",
-              marginBottom: "1.5rem",
-            }}
-          >
-            تسجيل الدخول
-          </h3>
-
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
-          >
-            {/* Email Input */}
-            <div style={{ position: "relative" }}>
-              <input
-                type="text"
-                value={userId}
-                onChange={(e) => setUserId(e.target.value)}
-                placeholder="الايميل"
-                style={{
-                  width: "364px",
-                  height: "52px",
-                  padding: "0 1rem",
-                  paddingRight: "3rem",
-                  border: "1px solid #DDE3E8",
-                  borderRadius: "16px",
-                  backgroundColor: "white",
-                  outline: "none",
-                  color: "#333",
-                }}
-              />
-              <span
-                style={{
-                  position: "absolute",
-                  right: "1rem",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  color: "#999",
-                  fontSize: "1.2rem",
-                }}
-              >
-                👤
-              </span>
-            </div>
-
-            {/* Password Input */}
-            <div style={{ position: "relative" }}>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="كلمة المرور"
-                style={{
-                  width: "364px",
-                  height: "52px",
-                  padding: "0 1rem",
-                  paddingRight: "3rem",
-                  border: "1px solid #DDE3E8",
-                  borderRadius: "16px",
-                  backgroundColor: "white",
-                  outline: "none",
-                  color: "#333",
-                }}
-              />
-              <span
-                style={{
-                  position: "absolute",
-                  right: "1rem",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  color: "#999",
-                  fontSize: "1.2rem",
-                }}
-              >
-                🔒
-              </span>
-            </div>
-
-            {/* Error */}
-            {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
-
-            {/* Forgot Password */}
-            <div
-              style={{
-                width: "364px",
-                height: "17px",
-                fontSize: "12px",
-                lineHeight: "140%",
-                fontWeight: "normal",
-                color: "#2196F3",
-                cursor: "pointer",
-                marginTop: "0.5rem",
-                textAlign: "left",
-              }}
-            >
-              هل نسيت كلمة المرور؟
-            </div>
-
-            {/* Login Button */}
-            <button
-              style={{
-                width: "364px",
-                height: "52px",
-                background: "linear-gradient(to right, #2196F3, #0D8AF0)",
-                color: "white",
-                borderRadius: "16px",
-                fontWeight: "600",
-                boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
-                cursor: "pointer",
-                opacity: loading ? 0.5 : 1,
-                marginTop: "1rem",
-                border: "none",
-              }}
-              onClick={handleLogin}
-              disabled={loading}
-            >
-              {loading ? "جارٍ تسجيل الدخول..." : "تسجيل الدخول"}
-            </button>
-
-            {/* Create Account */}
-            <div
-              style={{
-                width: "364px",
-                height: "24px",
-                fontSize: "16px",
-                fontWeight: "normal",
-                textAlign: "center",
-                color: "#666",
-                marginTop: "0.5rem",
-              }}
-            >
-              ليس لديك حساب؟{" "}
-              <span
-                style={{
-                  color: "#2196F3",
-                  textDecoration: "underline",
-                  cursor: "pointer",
-                }}
-              >
-                إنشاء حساب جديد
-              </span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
