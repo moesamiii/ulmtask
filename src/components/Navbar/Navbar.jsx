@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./Navbar.css";
 import logo from "../../assets/Ulmcare logo 1.png";
-import AuthModal from "../AuthModal/AuthModal";
+
+// 👉 Now use our reusable AuthModal
+import { AuthModal } from "../../features/auth";
 
 const Navbar = () => {
   const [showAuth, setShowAuth] = useState(false);
