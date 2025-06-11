@@ -59,21 +59,14 @@ const ShoppingCart = () => {
 
   return (
     <div style={{ padding: "2rem" }}>
-      <h2>🛒 سلة التسوق</h2>
+      <h2>🛒 تستطيع استخدام سلة التسوق </h2>
 
       {cartData ? (
         // Real API cart data
         <pre>{JSON.stringify(cartData, null, 2)}</pre>
       ) : token ? (
         // Show static cart if user logged in but no cartData
-        <div>
-          <p>🛒 هذه سلة تجريبية (static) للمستخدم المسجل.</p>
-          <ul>
-            <li>منتج 1 - 2x - 50 ريال</li>
-            <li>منتج 2 - 1x - 100 ريال</li>
-          </ul>
-          <p>الإجمالي: 200 ريال</p>
-        </div>
+        <div></div>
       ) : (
         // Not logged in → should not happen because of PrivateRoute
         <p>السلة فارغة.</p>
