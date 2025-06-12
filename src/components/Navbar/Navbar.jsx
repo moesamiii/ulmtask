@@ -155,13 +155,16 @@ const Navbar = () => {
                   whileTap={{ scale: 0.95 }}
                 >
                   <button
-                    className="flex items-center justify-center border border-gray-300 bg-white rounded-full w-[40px] h-[40px] overflow-hidden"
+                    className="flex items-center justify-center rounded-full w-[44px] h-[44px] border-2 border-blue-500 overflow-hidden bg-gray-100"
                     onClick={() => setShowProfileMenu((prev) => !prev)}
                   >
                     <img
                       src={profileIcon}
                       alt="Profile"
-                      className="w-full h-full object-cover"
+                      className="object-cover w-[44px] h-[44px] min-w-[44px] min-h-[44px] max-w-[44px] max-h-[44px]"
+                      onError={(e) => {
+                        e.target.src = "https://via.placeholder.com/150";
+                      }}
                     />
                   </button>
                 </motion.div>
