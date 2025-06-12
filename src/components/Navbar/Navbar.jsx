@@ -5,11 +5,13 @@ import logo from "../../assets/Ulmcare logo 1.png";
 
 // Reusable AuthModal
 import { AuthModal } from "../../features/auth";
+import { useAuth } from "../../features/auth/hooks/useAuth"; // ADD THIS
 
 const Navbar = () => {
   const [showAuth, setShowAuth] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { t, i18n } = useTranslation();
+  const { token, logout } = useAuth(); // ADD THIS
 
   const toggleLang = () => {
     const newLang = i18n.language === "ar" ? "en" : "ar";
@@ -79,17 +81,32 @@ const Navbar = () => {
               </li>
             </ul>
 
-            {/* Login & Language Toggle */}
+            {/* Login/SignOut & Language Toggle */}
             <div className="flex flex-col lg:flex-row gap-2 w-full lg:w-auto px-4 lg:px-0 mt-4 lg:mt-0">
-              <button
-                className="bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition"
-                onClick={() => {
-                  setShowAuth(true);
-                  setIsMobileMenuOpen(false);
-                }}
-              >
-                {t("login")}
-              </button>
+              {token ? (
+                // If logged in → show Sign Out button
+                <button
+                  className="bg-red-600 text-white font-semibold py-2 px-4 rounded hover:bg-red-700 transition"
+                  onClick={() => {
+                    logout();
+                    setIsMobileMenuOpen(false);
+                  }}
+                >
+                  {t("signOut") || "Sign Out"}
+                </button>
+              ) : (
+                // If not logged in → show Login button
+                <button
+                  className="bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition"
+                  onClick={() => {
+                    setShowAuth(true);
+                    setIsMobileMenuOpen(false);
+                  }}
+                >
+                  {t("login")}
+                </button>
+              )}
+
               <button
                 className="border border-gray-300 text-gray-700 font-semibold py-2 px-4 rounded hover:bg-gray-100 transition"
                 onClick={toggleLang}
