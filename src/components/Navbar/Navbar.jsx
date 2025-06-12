@@ -5,7 +5,8 @@ import logo from "../../assets/Ulmcare logo 1.png";
 
 // Reusable AuthModal
 import { AuthModal } from "../../features/auth";
-import { useAuth } from "../../features/auth/hooks/useAuth"; // ADD THIS
+import { useAuth } from "../../features/auth/hooks/useAuth";
+import cartImage from "../../assets/Frame 1000007431.png";
 
 const Navbar = () => {
   const [showAuth, setShowAuth] = useState(false);
@@ -69,15 +70,6 @@ const Navbar = () => {
                     {t("about")}
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to="/cart"
-                    className="block text-gray-600 font-semibold text-base hover:text-blue-600 hover:bg-gray-100 px-3 py-2 rounded"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    🛒 {t("cart")}
-                  </Link>
-                </li>
               </ul>
             </div>
           </div>
@@ -120,6 +112,14 @@ const Navbar = () => {
             >
               🌐 {i18n.language === "ar" ? "EN" : "عربي"}
             </button>
+
+            <Link
+              to="/cart"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex flex-col items-center justify-center bg-[#0798F1] rounded-lg py-[6px] px-[16px] h-[40px]"
+            >
+              <img src={cartImage} alt="Cart" className="w-6 h-6" />
+            </Link>
           </div>
         </div>
       </nav>
