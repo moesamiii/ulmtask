@@ -10,6 +10,7 @@ import { AuthModal } from "../../features/auth";
 import { useAuth } from "../../features/auth/hooks/useAuth";
 import cartImage from "../../assets/Frame 1000007431.png";
 import globeIcon from "../../assets/globe.png";
+import profileIcon from "../../assets/cat.jpg";
 
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -17,6 +18,7 @@ const Navbar = () => {
   const [showAuth, setShowAuth] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const { t, i18n } = useTranslation();
   const { token, logout } = useAuth();
@@ -142,24 +144,66 @@ const Navbar = () => {
           </motion.button>
 
           {/* Right side → Login & Lang buttons */}
-          <div className="flex flex-row gap-2 items-center">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`${
-                token
-                  ? "bg-red-600 hover:bg-red-700"
-                  : "bg-blue-600 hover:bg-blue-700"
-              } text-white font-semibold py-2 px-4 rounded transition`}
-              onClick={() => {
-                if (token) logout();
-                else setShowAuth(true);
-                setIsMobileMenuOpen(false);
-              }}
-            >
-              {token ? t("signOut") || "Sign Out" : t("login")}
-            </motion.button>
+          <div className="flex flex-row gap-2 items-center relative">
+            {token ? (
+              <>
+                {/* Profile button */}
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <button
+                    className="flex items-center justify-center border border-gray-300 bg-white rounded-full w-[40px] h-[40px] overflow-hidden"
+                    onClick={() => setShowProfileMenu((prev) => !prev)}
+                  >
+                    <img
+                      src={profileIcon}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                </motion.div>
 
+                {/* Profile dropdown */}
+                <AnimatePresence>
+                  {showProfileMenu && (
+                    <motion.div
+                      key="profileMenu"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute top-[70px] right-0 bg-white border border-gray-200 rounded shadow-lg z-50"
+                    >
+                      <button
+                        className="block w-full text-left bg-red-600 text-white font-semibold py-2 px-4 rounded hover:bg-red-700 transition"
+                        onClick={() => {
+                          logout();
+                          setIsMobileMenuOpen(false);
+                          setShowProfileMenu(false);
+                        }}
+                      >
+                        {t("signOut") || "Sign Out"}
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </>
+            ) : (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition"
+                onClick={() => {
+                  setShowAuth(true);
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                {t("login")}
+              </motion.button>
+            )}
+
+            {/* Cart */}
             <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}>
               <Link
                 to="/cart"
