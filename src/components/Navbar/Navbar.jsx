@@ -9,6 +9,7 @@ import logo from "../../assets/Ulmcare logo 1.png";
 import { AuthModal } from "../../features/auth";
 import { useAuth } from "../../features/auth/hooks/useAuth";
 import cartImage from "../../assets/Frame 1000007431.png";
+import globeIcon from "../../assets/globe.png";
 
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -169,13 +170,18 @@ const Navbar = () => {
               </Link>
             </motion.div>
 
+            {/* Language Switcher → now only globe icon */}
             <motion.button
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              whileTap={{ scale: 0.95 }}
-              className="border border-gray-300 text-gray-700 font-semibold py-2 px-4 rounded hover:bg-gray-100 transition"
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.9 }}
+              className="flex items-center justify-center border border-gray-300 bg-white rounded w-[40px] h-[40px] p-2 hover:bg-gray-100 transition"
               onClick={toggleLang}
             >
-              🌐 {i18n.language === "ar" ? "EN" : "عربي"}
+              <img
+                src={globeIcon}
+                alt="Language Switch"
+                className="w-full h-full object-contain"
+              />
             </motion.button>
           </div>
         </div>
