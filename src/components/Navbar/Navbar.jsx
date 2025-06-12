@@ -26,94 +26,100 @@ const Navbar = () => {
     <>
       <nav className="w-full bg-white px-4 py-3 shadow-md sticky top-0 z-50 min-h-[60px] rtl">
         <div className="flex items-center justify-between max-w-6xl mx-auto w-full">
-          <img src={logo} alt="Logo" className="w-20 h-auto" />
+          {/* Logo + Menu container */}
+          <div className="flex items-center gap-4 lg:gap-8">
+            {/* Logo */}
+            <img
+              src={logo}
+              alt="Logo"
+              className="h-[32px] w-auto max-w-[120px] object-contain"
+            />
+
+            {/* Main Links */}
+            <div
+              className={`${
+                isMobileMenuOpen ? "flex" : "hidden"
+              } lg:flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6`}
+            >
+              <ul className="flex flex-col lg:flex-row list-none gap-2 lg:gap-6">
+                <li>
+                  <Link
+                    to="/"
+                    className="block text-gray-600 font-semibold text-base hover:text-blue-600 hover:bg-gray-100 px-3 py-2 rounded"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {t("home")}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/services"
+                    className="block text-gray-600 font-semibold text-base hover:text-blue-600 hover:bg-gray-100 px-3 py-2 rounded"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {t("services")}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/aboutus"
+                    className="block text-gray-600 font-semibold text-base hover:text-blue-600 hover:bg-gray-100 px-3 py-2 rounded"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {t("about")}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/cart"
+                    className="block text-gray-600 font-semibold text-base hover:text-blue-600 hover:bg-gray-100 px-3 py-2 rounded"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    🛒 {t("cart")}
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
 
           {/* Hamburger Icon */}
           <button
-            className="lg:hidden text-2xl text-gray-800"
+            className="lg:hidden text-2xl text-gray-800 ml-2"
             onClick={toggleMobileMenu}
           >
             ☰
           </button>
 
-          {/* Main Links */}
-          <div
-            className={`${
-              isMobileMenuOpen ? "flex" : "hidden"
-            } lg:flex flex-col lg:flex-row lg:items-center lg:gap-8 w-full lg:w-auto mt-4 lg:mt-0 bg-white lg:bg-transparent border-t lg:border-0 pt-4 lg:pt-0`}
-          >
-            <ul className="flex flex-col lg:flex-row list-none gap-2 lg:gap-6 w-full lg:w-auto">
-              <li>
-                <Link
-                  to="/"
-                  className="block text-gray-600 font-semibold text-base hover:text-blue-600 hover:bg-gray-100 px-3 py-2 rounded"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {t("home")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/services"
-                  className="block text-gray-600 font-semibold text-base hover:text-blue-600 hover:bg-gray-100 px-3 py-2 rounded"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {t("services")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/aboutus"
-                  className="block text-gray-600 font-semibold text-base hover:text-blue-600 hover:bg-gray-100 px-3 py-2 rounded"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {t("about")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/cart"
-                  className="block text-gray-600 font-semibold text-base hover:text-blue-600 hover:bg-gray-100 px-3 py-2 rounded"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  🛒 {t("cart")}
-                </Link>
-              </li>
-            </ul>
-
-            {/* Login/SignOut & Language Toggle */}
-            <div className="flex flex-col lg:flex-row gap-2 w-full lg:w-auto px-4 lg:px-0 mt-4 lg:mt-0">
-              {token ? (
-                // If logged in → show Sign Out button
-                <button
-                  className="bg-red-600 text-white font-semibold py-2 px-4 rounded hover:bg-red-700 transition"
-                  onClick={() => {
-                    logout();
-                    setIsMobileMenuOpen(false);
-                  }}
-                >
-                  {t("signOut") || "Sign Out"}
-                </button>
-              ) : (
-                // If not logged in → show Login button
-                <button
-                  className="bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition"
-                  onClick={() => {
-                    setShowAuth(true);
-                    setIsMobileMenuOpen(false);
-                  }}
-                >
-                  {t("login")}
-                </button>
-              )}
-
+          {/* Right side → Login & Lang buttons */}
+          <div className="flex flex-row gap-2 items-center">
+            {token ? (
               <button
-                className="border border-gray-300 text-gray-700 font-semibold py-2 px-4 rounded hover:bg-gray-100 transition"
-                onClick={toggleLang}
+                className="bg-red-600 text-white font-semibold py-2 px-4 rounded hover:bg-red-700 transition"
+                onClick={() => {
+                  logout();
+                  setIsMobileMenuOpen(false);
+                }}
               >
-                🌐 {i18n.language === "ar" ? "EN" : "عربي"}
+                {t("signOut") || "Sign Out"}
               </button>
-            </div>
+            ) : (
+              <button
+                className="bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition"
+                onClick={() => {
+                  setShowAuth(true);
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                {t("login")}
+              </button>
+            )}
+
+            <button
+              className="border border-gray-300 text-gray-700 font-semibold py-2 px-4 rounded hover:bg-gray-100 transition"
+              onClick={toggleLang}
+            >
+              🌐 {i18n.language === "ar" ? "EN" : "عربي"}
+            </button>
           </div>
         </div>
       </nav>
