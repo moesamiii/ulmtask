@@ -1,17 +1,13 @@
 /* eslint-disable no-unused-vars */
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/Ulmcare logo 1.png";
-
-// Reusable AuthModal
 import { AuthModal } from "../../features/auth";
 import { useAuth } from "../../features/auth/hooks/useAuth";
 import cartImage from "../../assets/Frame 1000007431.png";
 import globeIcon from "../../assets/globe.png";
 import profileIcon from "../../assets/cat.jpg";
-
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
@@ -21,7 +17,7 @@ const Navbar = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const { t, i18n } = useTranslation();
-  const { token, logout } = useAuth();
+  const { token, user, logout } = useAuth();
 
   const toggleLang = () => {
     const newLang = i18n.language === "ar" ? "en" : "ar";
@@ -47,7 +43,6 @@ const Navbar = () => {
         <div className="flex items-center justify-between max-w-6xl mx-auto w-full">
           {/* Logo + Menu container */}
           <div className="flex items-center gap-4 lg:gap-8">
-            {/* Logo */}
             <motion.img
               src={logo}
               alt="Logo"
@@ -147,6 +142,13 @@ const Navbar = () => {
           <div className="flex flex-row gap-2 items-center relative">
             {token ? (
               <>
+                {/* User Name */}
+                {user && (
+                  <span className="text-gray-700 text-sm font-semibold hidden lg:block">
+                    مرحباً، {user.name}
+                  </span>
+                )}
+
                 {/* Profile button */}
                 <motion.div
                   whileHover={{ scale: 1.1 }}
