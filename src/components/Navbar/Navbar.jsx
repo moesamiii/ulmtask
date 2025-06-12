@@ -15,6 +15,8 @@ import { motion, AnimatePresence } from "framer-motion";
 const Navbar = () => {
   const [showAuth, setShowAuth] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+
   const { t, i18n } = useTranslation();
   const { token, logout } = useAuth();
 
@@ -26,6 +28,15 @@ const Navbar = () => {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };
+
+  const servicesDropdownItems = [
+    { name: "التحاليل الطبية", path: "/services/medical-tests" },
+    { name: "الأشعة", path: "/services/radiology" },
+    { name: "الاطباء", path: "/services/doctors" },
+    { name: "الزيارة المنزلية", path: "/services/home-visit" },
+    { name: "المرافقة الصحية", path: "/services/healthcare-companion" },
+    { name: "السياحة العلاجية", path: "/services/medical-tourism" },
+  ];
 
   return (
     <>
@@ -57,17 +68,63 @@ const Navbar = () => {
                   } lg:flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6`}
                 >
                   <ul className="flex flex-col lg:flex-row list-none gap-2 lg:gap-6">
-                    {["home", "services", "about"].map((item) => (
-                      <li key={item}>
-                        <Link
-                          to={item === "home" ? "/" : `/${item}`}
-                          className="block text-gray-600 font-semibold text-base hover:text-blue-600 hover:bg-gray-100 px-3 py-2 rounded"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          {t(item)}
-                        </Link>
-                      </li>
-                    ))}
+                    <li>
+                      <Link
+                        to="/"
+                        className="block text-gray-600 font-semibold text-base hover:text-blue-600 hover:bg-gray-100 px-3 py-2 rounded"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {t("home")}
+                      </Link>
+                    </li>
+
+                    {/* Services with dropdown */}
+                    <li
+                      className="relative"
+                      onMouseEnter={() => setServicesDropdownOpen(true)}
+                      onMouseLeave={() => setServicesDropdownOpen(false)}
+                    >
+                      <div className="block cursor-pointer text-gray-600 font-semibold text-base hover:text-blue-600 hover:bg-gray-100 px-3 py-2 rounded">
+                        {t("services")}
+                      </div>
+
+                      <AnimatePresence>
+                        {servicesDropdownOpen && (
+                          <motion.div
+                            key="servicesDropdown"
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.3 }}
+                            className="absolute top-full right-0 w-56 bg-white border border-gray-200 rounded shadow-lg py-2 z-50"
+                          >
+                            {servicesDropdownItems.map((item) => (
+                              <Link
+                                key={item.path}
+                                to={item.path}
+                                onClick={() => {
+                                  setIsMobileMenuOpen(false);
+                                  setServicesDropdownOpen(false);
+                                }}
+                                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600"
+                              >
+                                {item.name}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </li>
+
+                    <li>
+                      <Link
+                        to="/aboutus"
+                        className="block text-gray-600 font-semibold text-base hover:text-blue-600 hover:bg-gray-100 px-3 py-2 rounded"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {t("about")}
+                      </Link>
+                    </li>
                   </ul>
                 </motion.div>
               )}
@@ -102,15 +159,6 @@ const Navbar = () => {
               {token ? t("signOut") || "Sign Out" : t("login")}
             </motion.button>
 
-            <motion.button
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              whileTap={{ scale: 0.95 }}
-              className="border border-gray-300 text-gray-700 font-semibold py-2 px-4 rounded hover:bg-gray-100 transition"
-              onClick={toggleLang}
-            >
-              🌐 {i18n.language === "ar" ? "EN" : "عربي"}
-            </motion.button>
-
             <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}>
               <Link
                 to="/cart"
@@ -120,6 +168,15 @@ const Navbar = () => {
                 <img src={cartImage} alt="Cart" className="w-6 h-6" />
               </Link>
             </motion.div>
+
+            <motion.button
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
+              className="border border-gray-300 text-gray-700 font-semibold py-2 px-4 rounded hover:bg-gray-100 transition"
+              onClick={toggleLang}
+            >
+              🌐 {i18n.language === "ar" ? "EN" : "عربي"}
+            </motion.button>
           </div>
         </div>
       </nav>
