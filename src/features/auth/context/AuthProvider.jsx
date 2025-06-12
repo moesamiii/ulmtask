@@ -16,6 +16,8 @@ export const AuthProvider = ({ children, config }) => {
   const [token, setToken] = useState(getToken());
   const [refreshToken, setRefreshTokenState] = useState(getRefreshToken());
 
+  const [globalError, setGlobalError] = useState(null);
+
   const lastTokenRef = useRef(token);
   const lastRefreshTokenRef = useRef(refreshToken);
 
@@ -39,6 +41,8 @@ export const AuthProvider = ({ children, config }) => {
       email: data.email,
       name: data.arabicName || data.englishName,
     });
+
+    setGlobalError(null); // clear any previous global error
   };
 
   const logout = () => {
@@ -51,6 +55,7 @@ export const AuthProvider = ({ children, config }) => {
     setUser(null);
     isInitialRefreshDoneRef.current = false;
     isRefreshingRef.current = false;
+    setGlobalError("❌ جلسة العمل انتهت. الرجاء تسجيل الدخول من جديد.");
   };
 
   // ✅ Refresh token on first page load (safe)
@@ -153,7 +158,17 @@ export const AuthProvider = ({ children, config }) => {
   }, [refreshToken, config.apiUrl]);
 
   return (
-    <AuthContext.Provider value={{ user, token, refreshToken, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        token,
+        refreshToken,
+        login,
+        logout,
+        globalError,
+        setGlobalError,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
