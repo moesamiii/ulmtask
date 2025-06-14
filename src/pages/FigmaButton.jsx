@@ -1,5 +1,6 @@
 import React from "react";
 import avatar from "../assets/avatar-man.png";
+import logo from "../assets/ulm-care-logo.png";
 import { FiChevronDown, FiShoppingCart, FiBell } from "react-icons/fi";
 
 const Navbar = () => {
@@ -13,39 +14,45 @@ const Navbar = () => {
             {/* Right section: Logo + Menu */}
             <div className="flex items-center h-[36px] gap-[42px]">
               {/* Logo */}
-              <div className="w-[132px] h-[36px] flex flex-col items-end justify-center leading-tight">
-                <span className="text-[#0798F1] text-[18px] font-semibold">
-                  Ulm Care
-                </span>
-                <span className="text-[10px] text-[#717171]">
-                  Medical Services
-                </span>
+              <div className="w-[131.54px] h-[36px] flex items-center justify-end">
+                <img
+                  src={logo}
+                  alt="Ulm Care Logo"
+                  className="h-full w-auto object-contain"
+                  style={{
+                    maxWidth: "131.54px",
+                    maxHeight: "36px",
+                  }}
+                />
               </div>
 
-              {/* Menu */}
-              <div className="flex items-center gap-[16px] h-[24px]">
+              {/* Updated Menu - Now exactly 298×24 with 16px gaps */}
+              <div
+                className="flex items-center h-[24px] gap-[16px]"
+                style={{ width: "298px" }}
+              >
                 {/* الرئيسية */}
                 <span
-                  className="w-[51px] h-[24px] text-[#0798F1] font-semibold text-base leading-[100%] flex items-center"
+                  className="text-[#0798F1] font-semibold text-base leading-[24px] flex items-center"
                   style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
                 >
                   الرئيسية
                 </span>
 
                 {/* خدماتنا + dropdown */}
-                <span
-                  className="flex items-center gap-[5px] w-[65px] h-[24px]"
+                <div
+                  className="flex items-center gap-[5px]"
                   style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
                 >
-                  <span className="w-[44px] h-[24px] text-base font-normal text-[#6F6F6F] leading-[100%] flex items-center justify-end">
+                  <span className="text-base font-normal text-[#6F6F6F] leading-[24px]">
                     خدماتنا
                   </span>
-                  <FiChevronDown className="w-[8px] h-[16px] text-[#6F6F6F]" />
-                </span>
+                  <FiChevronDown className="w-[8px] h-[16px] text-[#6F6F6F] mt-[4px]" />
+                </div>
 
                 {/* كونكت للأطباء */}
                 <span
-                  className="w-[99px] h-[24px] text-base font-normal text-[#6F6F6F] leading-[100%] flex items-center justify-center"
+                  className="text-base font-normal text-[#6F6F6F] leading-[24px]"
                   style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
                 >
                   كونكت للأطباء
@@ -53,7 +60,7 @@ const Navbar = () => {
 
                 {/* الدعم */}
                 <span
-                  className="w-[35px] h-[24px] text-base font-normal text-[#6F6F6F] leading-[100%] flex items-center justify-center"
+                  className="text-base font-normal text-[#6F6F6F] leading-[24px]"
                   style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
                 >
                   الدعم
@@ -61,15 +68,12 @@ const Navbar = () => {
               </div>
             </div>
 
-            {/* Left section: Avatar, Language, Icons - Updated to match Figma specs */}
+            {/* Left section: Avatar, Language, Icons */}
             <div className="w-[590px] h-[42px] flex items-center justify-end gap-[16px]">
-              {/* Avatar - 42×42 */}
-              <div className="w-[42px] h-[42px]">
-                <img
-                  src={avatar}
-                  alt="User Avatar"
-                  className="w-full h-full rounded-full object-cover"
-                />
+              {/* Icons - Both 24×24 with 16px gap between them */}
+              <div className="flex items-center gap-[16px]">
+                <FiBell className="w-[24px] h-[24px] text-[#6F6F6F]" />
+                <FiShoppingCart className="w-[24px] h-[24px] text-[#6F6F6F]" />
               </div>
 
               {/* Language selector - Width Hug (55.67×24) */}
@@ -83,10 +87,13 @@ const Navbar = () => {
                 <FiChevronDown className="w-[24px] h-[24px]" />
               </div>
 
-              {/* Icons - Both 24×24 with 16px gap between them */}
-              <div className="flex items-center gap-[16px]">
-                <FiShoppingCart className="w-[24px] h-[24px] text-[#6F6F6F]" />
-                <FiBell className="w-[24px] h-[24px] text-[#6F6F6F]" />
+              {/* Avatar - 42×42 */}
+              <div className="w-[42px] h-[42px]">
+                <img
+                  src={avatar}
+                  alt="User Avatar"
+                  className="w-full h-full rounded-full object-cover"
+                />
               </div>
             </div>
           </div>
