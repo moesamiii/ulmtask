@@ -1,20 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./StickyButton.css";
 
-const StickyButton = ({ label, icon, phoneNumber, message }) => {
+const StickyButton = ({ label, icon }) => {
+  const navigate = useNavigate();
+
   const handleClick = () => {
-    if (!phoneNumber) return;
-
-    // Construct the WhatsApp URL
-    let url = `https://wa.me/${phoneNumber}`;
-
-    // If you want to send a predefined message, encode it in URL
-    if (message) {
-      url += `?text=${encodeURIComponent(message)}`;
-    }
-
-    // Open WhatsApp chat in a new tab
-    window.open(url, "_blank");
+    navigate("/figmaButton"); // navigate to the empty page
   };
 
   return (

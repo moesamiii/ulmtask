@@ -3,11 +3,12 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import App from "../App";
 
-import PrivateRoute from "../components/PrivateRoute"; // ✅ NO .jsx
-const ShoppingCart = lazy(() => import("../components/ShoppingCart")); // ✅ NO .jsx
+import PrivateRoute from "../components/PrivateRoute"; //
+const ShoppingCart = lazy(() => import("../components/ShoppingCart")); //
 const AboutUsPage = lazy(() => import("../pages/AboutUsPage"));
 const ServicesPage = lazy(() => import("../pages/Service"));
 const NotFoundPage = lazy(() => import("./NotFoundPage"));
+const FigmaButton = lazy(() => import("../pages/FigmaButton"));
 
 const AppRouter = () => {
   return (
@@ -22,6 +23,8 @@ const AppRouter = () => {
 
           {/* Lazy load services */}
           <Route path="/services" element={<ServicesPage />} />
+
+          <Route path="/figmaButton" element={<FigmaButton />} />
 
           {/* ✅ Add Shopping Cart with PrivateRoute */}
           <Route
